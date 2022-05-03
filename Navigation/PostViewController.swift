@@ -17,6 +17,18 @@ class PostViewController: UIViewController {
 
         self.navigationItem.title = titlePost
         view.backgroundColor = .green
+        
+        makeBarButtonItem()
     }
 
+    private func makeBarButtonItem() {
+        let barItem = UIBarButtonItem(title: "Инфо", style: .plain, target: self, action: #selector(buttonAction))
+        navigationItem.rightBarButtonItem = barItem
+    }
+    
+    @objc private func buttonAction() {
+        let vc = InfoViewController()
+        present(vc, animated: true)
+    }
+    
 }

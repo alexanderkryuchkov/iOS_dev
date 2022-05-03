@@ -29,11 +29,11 @@ class FeedViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        postButton()
+        makePostButton()
 
     }
 
-    private func postButton() {
+    private func makePostButton() {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
         button.center = view.center
         button.setTitle("Читать пост", for: .normal)
