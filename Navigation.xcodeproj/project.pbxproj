@@ -13,6 +13,8 @@
 		601556B52820B91F0052B189 /* SettingsTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601556B42820B91F0052B189 /* SettingsTabViewController.swift */; };
 		601556BB2820C10C0052B189 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601556BA2820C10C0052B189 /* FeedViewController.swift */; };
 		601556BD2820C1170052B189 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601556BC2820C1170052B189 /* ProfileViewController.swift */; };
+		601556BF2820C2050052B189 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601556BE2820C2050052B189 /* PostViewController.swift */; };
+		601556C12820CF2F0052B189 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601556C02820CF2F0052B189 /* InfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		601556B42820B91F0052B189 /* SettingsTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabViewController.swift; sourceTree = "<group>"; };
 		601556BA2820C10C0052B189 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		601556BC2820C1170052B189 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		601556BE2820C2050052B189 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		601556C02820CF2F0052B189 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 				601556A02820B2040052B189 /* AppDelegate.swift */,
 				601556BA2820C10C0052B189 /* FeedViewController.swift */,
 				601556BC2820C1170052B189 /* ProfileViewController.swift */,
+				601556BE2820C2050052B189 /* PostViewController.swift */,
+				601556C02820CF2F0052B189 /* InfoViewController.swift */,
 				601556B42820B91F0052B189 /* SettingsTabViewController.swift */,
 				601556A92820B2060052B189 /* Assets.xcassets */,
 				601556AB2820B2060052B189 /* LaunchScreen.storyboard */,
@@ -141,6 +147,8 @@
 				601556BB2820C10C0052B189 /* FeedViewController.swift in Sources */,
 				601556BD2820C1170052B189 /* ProfileViewController.swift in Sources */,
 				601556A12820B2040052B189 /* AppDelegate.swift in Sources */,
+				601556C12820CF2F0052B189 /* InfoViewController.swift in Sources */,
+				601556BF2820C2050052B189 /* PostViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
