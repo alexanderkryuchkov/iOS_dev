@@ -9,8 +9,12 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    let profileHeaderView = ProfileHeaderView()
-
+    let profileHeaderView: ProfileHeaderView = {
+        let view = ProfileHeaderView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray4
@@ -19,20 +23,20 @@ class ProfileViewController: UIViewController {
     
     func layer() {
         
-//        view.addSubview(profileHeaderView)
+        view.addSubview(profileHeaderView)
         
-//        NSLayoutConstraint.activate([
-//            profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//            profileHeaderView.heightAnchor.constraint(equalToConstant: 220)
-//        ])
-//
-        view.addSubview(profileHeaderView.imageView)
-        view.addSubview(profileHeaderView.fullNameLabel)
-        view.addSubview(profileHeaderView.setStatusButton)
-        view.addSubview(profileHeaderView.statusLabel)
-        view.addSubview(profileHeaderView.statusTextField)
+        NSLayoutConstraint.activate([
+            profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            profileHeaderView.heightAnchor.constraint(equalToConstant: 220)
+        ])
+
+        profileHeaderView.addSubview(profileHeaderView.imageView)
+        profileHeaderView.addSubview(profileHeaderView.fullNameLabel)
+        profileHeaderView.addSubview(profileHeaderView.setStatusButton)
+        profileHeaderView.addSubview(profileHeaderView.statusLabel)
+        profileHeaderView.addSubview(profileHeaderView.statusTextField)
         view.addSubview(profileHeaderView.setTitleButton)
         
         NSLayoutConstraint.activate([
