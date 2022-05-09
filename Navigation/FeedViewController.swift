@@ -81,7 +81,6 @@ class FeedViewController: UIViewController {
         makeLayout()
 
     }
-
     
     private func makeLayout() {
         
@@ -90,17 +89,15 @@ class FeedViewController: UIViewController {
         [firstButton, secondButton].forEach { stackView.addArrangedSubview($0) }
         
         NSLayoutConstraint.activate([
+            // Constraint - stackView
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
-        ])
-        
-        NSLayoutConstraint.activate([
+            // Constraint - firstButton
             firstButton.widthAnchor.constraint(equalToConstant: 100),
-            firstButton.heightAnchor.constraint(equalToConstant: 30)
-        ])
-        
-        NSLayoutConstraint.activate([
+            firstButton.heightAnchor.constraint(equalToConstant: 30),
+
+            // Constraint - secondButton
             secondButton.widthAnchor.constraint(equalToConstant: 100),
             secondButton.heightAnchor.constraint(equalToConstant: 30)
         ])

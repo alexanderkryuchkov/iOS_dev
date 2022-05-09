@@ -55,7 +55,7 @@ class ProfileHeaderView: UIView {
         let button = UIButton()
         
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        button.backgroundColor = .blue
+        button.backgroundColor = ue.bl
         
         button.layer.cornerRadius = 4
         
@@ -81,6 +81,9 @@ class ProfileHeaderView: UIView {
         statusTextField.layer.cornerRadius = 12
         statusTextField.layer.borderColor = UIColor.black.cgColor
         statusTextField.layer.borderWidth = 1.0
+        statusTextField.placeholder = "Show status"
+        statusTextField.leftView = UIView(frame: CGRect(x: 0, y: 10, width: 10, height: statusTextField.frame.height))
+        statusTextField.leftViewMode = .always
         
         statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         statusTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -109,9 +112,7 @@ class ProfileHeaderView: UIView {
                 self.statusTextField.text = ""
             }
         }
-        print("2")
     }
-    
     
     @objc func statusTextChanged(textField: UITextField) {
         if let newText = textField.text {
@@ -119,15 +120,60 @@ class ProfileHeaderView: UIView {
         }
     }
     
-    
     @objc func buttonTitlePressed() {
         if !self.statusText.isEmpty {
             self.fullNameLabel.text = self.statusText
             self.statusTextField.text = ""
         }
-        print("3")
-
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        addSubview(imageView)
+        addSubview(fullNameLabel)
+        addSubview(setStatusButton)
+        addSubview(statusLabel)
+        addSubview(statusTextField)
+        addSubview(setTitleButton)
+        
+        NSLayoutConstraint.activate([
+            // Constraint - imageView
+            imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            imageView.widthAnchor.constraint(equalToConstant: 100),
+            imageView.heightAnchor.constraint(equalToConstant: 100),
 
+            // Constraint - fullNameLabel
+            fullNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            fullNameLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),
+
+            // Constraint - setStatusButton
+            setStatusButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
+            setStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            setStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+
+            // Constraint - statusLabel
+            statusLabel.topAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -64),
+            statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
+
+            // Constraint - statusTextField
+            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 7),
+            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            statusTextField.heightAnchor.constraint(equalToConstant: 25),
+            statusTextField.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
+
+            // Constraint - setTitleButton
+            setTitleButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+            setTitleButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            setTitleButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            setTitleButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
 }
