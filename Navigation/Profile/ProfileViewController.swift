@@ -49,6 +49,8 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
         
+        cell.setupCell(postModel[indexPath.section])
+
         return cell
     }
 
@@ -57,5 +59,14 @@ extension ProfileViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension ProfileViewController: UITableViewDelegate {
-
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = ProfileHeaderView()
+        return header
+    }
+    
 }

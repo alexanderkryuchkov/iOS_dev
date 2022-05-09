@@ -19,9 +19,10 @@ class PostTableViewCell: UITableViewCell {
     private let autorLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .black
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.bold)
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.bold)
         label.text = "autorLabel"
+        label.numberOfLines = 2
         return label
     }()
     
@@ -37,8 +38,9 @@ class PostTableViewCell: UITableViewCell {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .systemGray2
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.regular)
+        label.textColor = .systemGray
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
+        label.numberOfLines = 0
         label.text = "descriptionLabel"
         return label
     }()
@@ -46,18 +48,20 @@ class PostTableViewCell: UITableViewCell {
     private let likesLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .black
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.regular)
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
         label.text = "likesLabel"
+        
         return label
     }()
     
     private let viewsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .black
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.regular)
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
         label.text = "viewsLabel"
+        
         return label
     }()
     
@@ -74,8 +78,8 @@ class PostTableViewCell: UITableViewCell {
         autorLabel.text = post.author
         postImageView.image = UIImage(named: post.image)
         descriptionLabel.text = post.description
-        likesLabel.text = String(post.likes)
-        viewsLabel.text = String(post.views)
+        likesLabel.text = "Likes: " + String(post.likes)
+        viewsLabel.text = "Views: " + String(post.views)
     }
     
     func layout() {
@@ -102,9 +106,10 @@ class PostTableViewCell: UITableViewCell {
             autorLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -insert),
             
             // Constraint - postImageView
-            postImageView.topAnchor.constraint(equalTo: autorLabel.bottomAnchor, constant: insert),
+            postImageView.topAnchor.constraint(equalTo: autorLabel.bottomAnchor, constant: 12),
             postImageView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
+            postImageView.heightAnchor.constraint(equalToConstant: 200),
             
             // Constraint - descriptionLabel
             descriptionLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: insert),
@@ -114,11 +119,10 @@ class PostTableViewCell: UITableViewCell {
             // Constraint - likesLabel
             likesLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: insert),
             likesLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: insert),
-            likesLabel.bottomAnchor.constraint(equalTo: mainView.bottomAnchor),
             
             // Constraint - viewsLabel
             viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: insert),
-            viewsLabel.trailingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: -insert),
+            viewsLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -insert),
             viewsLabel.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: -insert)
         ])
     }
