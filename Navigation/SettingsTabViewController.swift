@@ -10,7 +10,7 @@ import UIKit
 class SettingsTabViewController: UITabBarController {
 
     let userFeedVC = FeedViewController()
-    let userProfileVC = ProfileViewController()
+    let userProfileVC = LogInViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,13 +20,13 @@ class SettingsTabViewController: UITabBarController {
     private func setupControllers() {
         
         let userFeedNavigationController = UINavigationController(rootViewController: userFeedVC)
-        userFeedVC.tabBarItem.title = "Лента"
-        userFeedVC.tabBarItem.image = UIImage(systemName: "bolt")
+        userFeedVC.tabBarItem.title = "Feed"
+        userFeedVC.tabBarItem.image = UIImage(systemName: "house")
         userFeedVC.navigationItem.title = "Лента пользователя"
         
         let userProfileNavigationController = UINavigationController(rootViewController: userProfileVC)
-        userProfileVC.tabBarItem.title = "Профиль"
-        userProfileVC.tabBarItem.image = UIImage(systemName: "bolt")
+        userProfileVC.tabBarItem.title = "Profile"
+        userProfileVC.tabBarItem.image = UIImage(systemName: "person.crop.circle")
         userProfileVC.navigationItem.title = "Профиль пользователя"
         
         viewControllers = [userFeedNavigationController, userProfileNavigationController]

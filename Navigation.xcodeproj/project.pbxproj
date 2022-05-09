@@ -17,6 +17,7 @@
 		601556BF2820C2050052B189 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601556BE2820C2050052B189 /* PostViewController.swift */; };
 		601556C12820CF2F0052B189 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601556C02820CF2F0052B189 /* InfoViewController.swift */; };
 		60329F7D28269FA8001C7783 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60329F7C28269FA8001C7783 /* LogInViewController.swift */; };
+		60329F7F2826A2A9001C7783 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60329F7E2826A2A9001C7783 /* LoginView.swift */; };
 		60568E9A2825133A00744BDB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60568E992825133A00744BDB /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		601556BE2820C2050052B189 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		601556C02820CF2F0052B189 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		60329F7C28269FA8001C7783 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		60329F7E2826A2A9001C7783 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		60568E992825133A00744BDB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -52,6 +54,7 @@
 			children = (
 				60100B162821469300FAD718 /* ProfileHeaderView.swift */,
 				60100B18282146AC00FAD718 /* ProfileViewController.swift */,
+				60329F7E2826A2A9001C7783 /* LoginView.swift */,
 				60329F7C28269FA8001C7783 /* LogInViewController.swift */,
 			);
 			path = Profile;
@@ -168,6 +171,7 @@
 				601556C12820CF2F0052B189 /* InfoViewController.swift in Sources */,
 				60100B19282146AC00FAD718 /* ProfileViewController.swift in Sources */,
 				601556BF2820C2050052B189 /* PostViewController.swift in Sources */,
+				60329F7F2826A2A9001C7783 /* LoginView.swift in Sources */,
 				60568E9A2825133A00744BDB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
