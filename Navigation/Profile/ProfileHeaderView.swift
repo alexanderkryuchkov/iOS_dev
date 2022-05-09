@@ -55,7 +55,7 @@ class ProfileHeaderView: UIView {
         let button = UIButton()
         
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        button.backgroundColor = ue.bl
+        button.backgroundColor = .blue
         
         button.layer.cornerRadius = 4
         
@@ -138,6 +138,7 @@ class ProfileHeaderView: UIView {
         addSubview(setTitleButton)
         
         NSLayoutConstraint.activate([
+            
             // Constraint - imageView
             imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),

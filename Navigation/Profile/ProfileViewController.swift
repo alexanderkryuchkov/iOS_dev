@@ -9,10 +9,15 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    let profileHeaderView: ProfileHeaderView = {
-        let view = ProfileHeaderView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    private let postModel = PostModel.makepostModel()
+    
+    private lazy var profileTableVIew: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
+        return tableView
     }()
     
     override func viewDidLoad() {
@@ -22,16 +27,35 @@ class ProfileViewController: UIViewController {
     }
     
     func layer() {
-        
-        view.addSubview(profileHeaderView)
+        view.addSubview(profileTableVIew)
         
         NSLayoutConstraint.activate([
-            profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            profileHeaderView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            profileTableVIew.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            profileTableVIew.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profileTableVIew.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            profileTableVIew.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-
     }
+}
+
+// MARK: - UITableViewDataSource
+
+extension ProfileViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return postModel.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
+        
+        return cell
+    }
+
+}
+
+// MARK: - UITableViewDelegate
+
+extension ProfileViewController: UITableViewDelegate {
 
 }
