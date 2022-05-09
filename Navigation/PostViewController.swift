@@ -10,12 +10,12 @@ import UIKit
 
 class PostViewController: UIViewController {
 
-    lazy var titlePost: String = "Пост"
+    var titlePost: Post?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.title = titlePost
+        self.navigationItem.title = titlePost?.title
         view.backgroundColor = .green
         
         makeBarButtonItem()
