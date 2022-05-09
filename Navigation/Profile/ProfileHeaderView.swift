@@ -81,6 +81,7 @@ class ProfileHeaderView: UIView {
         statusTextField.layer.cornerRadius = 12
         statusTextField.layer.borderColor = UIColor.black.cgColor
         statusTextField.layer.borderWidth = 1.0
+        statusTextField.placeholder = "Waiting fot something..."
         statusTextField.leftView = UIView(frame: CGRect(x: 0, y: 10, width: 10, height: statusTextField.frame.height))
         statusTextField.leftViewMode = .always
         

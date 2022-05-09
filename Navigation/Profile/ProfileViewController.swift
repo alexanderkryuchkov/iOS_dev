@@ -22,10 +22,8 @@ class ProfileViewController: UIViewController {
     }
     
     func layer() {
-        
         view.addSubview(profileHeaderView)
 
-        
         NSLayoutConstraint.activate([
             // Constraints - View/ProfilHeaderView
             profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
