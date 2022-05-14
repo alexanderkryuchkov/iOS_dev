@@ -11,7 +11,7 @@ class ProfileHeaderView: UIView {
     
     private var statusText: String = "Waiting fot something..."
     
-    let imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
 
         let imageView = UIImageView(frame: CGRect(x: 16, y: 16, width: 100, height: 100))
         imageView.image = UIImage(named: "hipsterCat")
@@ -24,7 +24,7 @@ class ProfileHeaderView: UIView {
 
     }()
     
-    let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         
         // Задаем переменные и координаты
         let titleLabelX = Int(UIScreen.main.bounds.width / 2 - 50)
@@ -40,7 +40,7 @@ class ProfileHeaderView: UIView {
     
     }()
 
-    lazy var commentLabel: UILabel = {
+    private lazy var commentLabel: UILabel = {
         
         // Задаем переменные и координаты
         let commentLabelX = Int(UIScreen.main.bounds.width / 2 - 50)
@@ -56,7 +56,7 @@ class ProfileHeaderView: UIView {
         
     }()
     
-    lazy var showStatusButton: UIButton = {
+    private lazy var showStatusButton: UIButton = {
         
         // Задаем переменные и координаты
         let buttonX = 16
@@ -83,7 +83,7 @@ class ProfileHeaderView: UIView {
         return button
     }()
     
-    lazy var statusTextField: UITextField = {
+    private lazy var statusTextField: UITextField = {
         
         // Задаем переменные и координаты
         let textFieldX = Int(self.commentLabel.frame.minX)
@@ -121,6 +121,11 @@ class ProfileHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        [self.imageView, self.titleLabel, self.commentLabel, self.showStatusButton, self.statusTextField].forEach{
+            self.addSubview($0)
+        }
+
     }
     
     required init?(coder: NSCoder) {
