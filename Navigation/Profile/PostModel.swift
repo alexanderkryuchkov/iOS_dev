@@ -14,8 +14,6 @@ struct PostModel {
     let likes: Int
     let views: Int
     
-    
-    // Тестовая функция на создание модели
     static func makepostModel() -> [PostModel] {
         var model = [PostModel]()
         

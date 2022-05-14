@@ -24,6 +24,7 @@
 		601556C12820CF2F0052B189 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601556C02820CF2F0052B189 /* InfoViewController.swift */; };
 		60329F7D28269FA8001C7783 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60329F7C28269FA8001C7783 /* LogInViewController.swift */; };
 		60568E9A2825133A00744BDB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60568E992825133A00744BDB /* SceneDelegate.swift */; };
+		605C333B282F61160024C1E3 /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605C333A282F61160024C1E3 /* PhotoModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		601556C02820CF2F0052B189 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		60329F7C28269FA8001C7783 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		60568E992825133A00744BDB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		605C333A282F61160024C1E3 /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,9 +64,10 @@
 		60100B152821464100FAD718 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				600D5F012828D92E0042FB82 /* PostModel.swift */,
+				605C333A282F61160024C1E3 /* PhotoModel.swift */,
 				60100B162821469300FAD718 /* ProfileHeaderView.swift */,
 				60100B18282146AC00FAD718 /* ProfileViewController.swift */,
-				600D5F012828D92E0042FB82 /* PostModel.swift */,
 				600D5F032829155A0042FB82 /* PostTableViewCell.swift */,
 				600622722829E6F7006D4120 /* PhotosTableViewCell.swift */,
 				600622742829EDC0006D4120 /* PhotosViewController.swift */,
@@ -184,6 +187,7 @@
 				601556BB2820C10C0052B189 /* FeedViewController.swift in Sources */,
 				60329F7D28269FA8001C7783 /* LogInViewController.swift in Sources */,
 				601556A12820B2040052B189 /* AppDelegate.swift in Sources */,
+				605C333B282F61160024C1E3 /* PhotoModel.swift in Sources */,
 				600D5F0628291E0D0042FB82 /* UIView+Extension.swift in Sources */,
 				60100B172821469300FAD718 /* ProfileHeaderView.swift in Sources */,
 				601556C12820CF2F0052B189 /* InfoViewController.swift in Sources */,
