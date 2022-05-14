@@ -60,7 +60,7 @@ extension ProfileViewController: UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as! PhotosTableViewCell
             cell.delegate = self
-            cell.setupCell(photoModel[indexPath.row])
+            cell.setupCell(photoModel)
             return cell
         }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell

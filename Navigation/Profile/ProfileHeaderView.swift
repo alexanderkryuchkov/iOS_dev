@@ -118,11 +118,10 @@ class ProfileHeaderView: UIView {
         super.init(frame: frame)
         
         addSubview(mainView)
-        mainView.addSubview(imageView)
-        mainView.addSubview(fullNameLabel)
-        mainView.addSubview(setStatusButton)
-        mainView.addSubview(statusLabel)
-        mainView.addSubview(statusTextField)
+        
+        [self.imageView, self.fullNameLabel, self.setStatusButton, self.statusLabel, self.statusTextField].forEach{
+            mainView.addSubview($0)
+        }
         
         NSLayoutConstraint.activate([
             

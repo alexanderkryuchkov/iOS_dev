@@ -11,9 +11,12 @@ protocol PhotosTableDelegate: AnyObject {
     func buttonPressed()
 }
 
+
 class PhotosTableViewCell: UITableViewCell {
     
     weak var delegate: PhotosTableDelegate?
+    
+    private let photoImageCount: Int = 4
         
     private let mainView: UIView = {
         let view = UIView()
@@ -40,7 +43,7 @@ class PhotosTableViewCell: UITableViewCell {
         return label
     }()
     
-    let photoButton: UIButton = {
+    private let photoButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         button.setImage(UIImage(systemName: "arrow.forward")?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
@@ -48,50 +51,25 @@ class PhotosTableViewCell: UITableViewCell {
         return button
     }()
 
-    private let photoImageView1: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .white
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 6
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    private let photoImageView2: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .white
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 6
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    private let photoImageView3: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .white
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 6
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    private let photoImageView4: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .white
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 6
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    @objc func buttonPressed() {
-        delegate?.buttonPressed()
-    }
+    private var photoImageView: [UIImageView] = {
+        
+        var phImageView: [UIImageView] = []
+        
+        for _ in 1 ... 4 {
 
+            let imageView: UIImageView = {
+                let imageView = UIImageView()
+                imageView.backgroundColor = .white
+                imageView.contentMode = .scaleAspectFill
+                imageView.clipsToBounds = true
+                imageView.layer.cornerRadius = 6
+                imageView.translatesAutoresizingMaskIntoConstraints = false
+                return imageView
+            }()
+            phImageView.append(imageView)
+        }
+        return phImageView
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -102,31 +80,32 @@ class PhotosTableViewCell: UITableViewCell {
         super.init(coder: coder)
     }
     
-    func setupCell(_ photo: PhotoModel) {
+    @objc func buttonPressed() {
+        delegate?.buttonPressed()
+    }
+    
+    private func createImageView(count: Int) {
         
-        photoImageView1.image = UIImage(named: photo.image)
-        photoImageView2.image = UIImage(named: photo.image)
-        photoImageView3.image = UIImage(named: photo.image)
-        photoImageView4.image = UIImage(named: photo.image)
+    }
+    
+    func setupCell(_ photo: [PhotoModel]) {
+        
+        for item in 0 ... (photoImageCount - 1) {
+            photoImageView[item].image = UIImage(named: photo[item].image)
+        }
 
     }
     
     func layout() {
-        
-//        let insert: CGFloat = 8
-        
-        let imageSize = (UIScreen.main.bounds.width - 48) / 4
-
+                
+        let imageSize = (UIScreen.main.bounds.width - 48) / CGFloat(photoImageCount)
         
         contentView.addSubview(mainView)
-        mainView.addSubview(titleLabel)
-        mainView.addSubview(photoButton)
-        mainView.addSubview(photoImageView1)
-        mainView.addSubview(photoImageView2)
-        mainView.addSubview(photoImageView3)
-        mainView.addSubview(photoImageView4)
-
         
+        [self.titleLabel, self.photoButton].forEach{
+            mainView.addSubview($0)
+        }
+            
         NSLayoutConstraint.activate([
             // Constraint - mainView
             mainView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -137,40 +116,33 @@ class PhotosTableViewCell: UITableViewCell {
             // Constraint - titleLabel
             titleLabel.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 12),
             titleLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 12),
-//            titleLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: 12),
             
             // Constraint - titleLabel
             photoButton.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 12),
-//            photoButton.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 12),
             photoButton.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -12),
-
-            // Constraint - photoImageView
-            photoImageView1.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
-            photoImageView1.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            photoImageView1.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: -12),
-            photoImageView1.widthAnchor.constraint(equalToConstant: imageSize),
-            photoImageView1.heightAnchor.constraint(equalToConstant: imageSize),
-            
-            
-            photoImageView2.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
-            photoImageView2.leadingAnchor.constraint(equalTo: photoImageView1.trailingAnchor, constant: 8),
-            photoImageView2.widthAnchor.constraint(equalToConstant: imageSize),
-            photoImageView2.heightAnchor.constraint(equalToConstant: imageSize),
-            
-            
-            photoImageView3.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
-            photoImageView3.leadingAnchor.constraint(equalTo: photoImageView2.trailingAnchor, constant: 8),
-            photoImageView3.widthAnchor.constraint(equalToConstant: imageSize),
-            photoImageView3.heightAnchor.constraint(equalToConstant: imageSize),
-            
-            
-            photoImageView4.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
-            photoImageView4.leadingAnchor.constraint(equalTo: photoImageView3.trailingAnchor, constant: 8),
-            photoImageView4.widthAnchor.constraint(equalToConstant: imageSize),
-            photoImageView4.heightAnchor.constraint(equalToConstant: imageSize)
-
         ])
+        
+        for item in 0 ... (photoImageCount - 1) {
+            mainView.addSubview(photoImageView[item])
+            
+            if item == 0 {
+                NSLayoutConstraint.activate([
+                photoImageView[item].topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
+                photoImageView[item].leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+                photoImageView[item].bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: -12),
+                photoImageView[item].widthAnchor.constraint(equalToConstant: imageSize),
+                photoImageView[item].heightAnchor.constraint(equalToConstant: imageSize)
+                ])
+            }else{
+                NSLayoutConstraint.activate([
+                photoImageView[item].topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
+                photoImageView[item].leadingAnchor.constraint(equalTo: photoImageView[item-1].trailingAnchor, constant: 8),
+                photoImageView[item].widthAnchor.constraint(equalToConstant: imageSize),
+                photoImageView[item].heightAnchor.constraint(equalToConstant: imageSize)
+                ])
+            }
+
+        }
     }
-    
     
 }
