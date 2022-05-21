@@ -51,7 +51,6 @@ class PostTableViewCell: UITableViewCell {
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
         label.text = "likesLabel"
-        
         return label
     }()
     
@@ -61,7 +60,6 @@ class PostTableViewCell: UITableViewCell {
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
         label.text = "viewsLabel"
-        
         return label
     }()
     
