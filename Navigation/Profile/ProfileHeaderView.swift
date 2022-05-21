@@ -8,9 +8,22 @@
 import UIKit
 
 
-class ProfileHeaderView: UIView {
+protocol ProfileHeaderDelegate: AnyObject {
+    
+    func tableScrollDisable()
+    
+    func tableScrollEnable()
+}
 
+class ProfileHeaderView: UIView {
+    
+    weak var delegate: ProfileHeaderDelegate?
+    
     lazy var statusText: String = ""
+    
+    private var oldXImageView = CGFloat()
+    private var oldYImageView = CGFloat()
+
     
     let mainView: UIView = {
         let view = UIView()
@@ -19,12 +32,20 @@ class ProfileHeaderView: UIView {
         return view
     }()
     
+    let blackView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        return view
+    }()
+    
     let imageView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = .blue
         view.image = UIImage(named: "hipsterCat")
         
-        // с этими разобраться
         view.contentMode = .scaleAspectFill
         view.layer.cornerRadius = 50
         view.clipsToBounds = true
@@ -33,6 +54,17 @@ class ProfileHeaderView: UIView {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    private let closeImageButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(closeButtonPressed), for: .touchUpInside)
+        button.setImage(UIImage(systemName: "xmark.circle")?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
+        button.layer.frame.size = CGSize(width: 30, height: 30)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.alpha = 0
+        button.isHidden = true
+        return button
     }()
     
     
@@ -107,6 +139,7 @@ class ProfileHeaderView: UIView {
             }
         }
     }
+
     
     @objc func statusTextChanged(textField: UITextField) {
         if let newText = textField.text {
@@ -114,14 +147,75 @@ class ProfileHeaderView: UIView {
         }
     }
     
+    @objc func tappAction() {
+        
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn) {
+            
+            self.oldXImageView = self.imageView.layer.position.x
+            self.oldYImageView = self.imageView.layer.position.y
+            
+            self.imageView.layer.position = CGPoint(x: self.mainView.center.x, y: UIScreen.main.bounds.size.height / 2)
+            self.imageView.layer.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width)
+
+            
+            self.imageView.layer.cornerRadius = 0
+            self.imageView.layer.borderWidth = 0
+
+            self.blackView.isHidden = false
+            self.blackView.alpha = 0.5
+            self.closeImageButton.isHidden = false
+
+            self.mainView.isUserInteractionEnabled = false            
+            self.mainView.layoutIfNeeded()
+        } completion: { _ in
+            UIView.animate(withDuration: 0.3) {
+            self.closeImageButton.alpha = 1
+            }
+        }
+        
+        delegate?.tableScrollDisable()
+
+    }
+    
+    @objc func closeButtonPressed() {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn) {
+            self.imageView.layer.position = CGPoint(x: self.oldXImageView, y: self.oldYImageView)
+            self.imageView.layer.bounds = CGRect(x: 0, y: 0, width: 100, height: 100)
+            
+            self.imageView.layer.cornerRadius = 50
+            self.imageView.layer.borderWidth = 3.0
+
+            self.blackView.alpha = 0
+            self.blackView.isHidden = true
+
+            self.mainView.isUserInteractionEnabled = true
+            self.mainView.layoutIfNeeded()
+        } completion: { _ in
+            UIView.animate(withDuration: 0.3) {
+            self.closeImageButton.alpha = 0
+            self.closeImageButton.isHidden = true
+
+            }
+        }
+        
+        delegate?.tableScrollEnable()
+    }
+    
+    func setupGesture() {
+        let tappGesture = UITapGestureRecognizer(target: self, action: #selector(tappAction))
+        imageView.addGestureRecognizer(tappGesture)
+        imageView.isUserInteractionEnabled = true
+    }
+
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         addSubview(mainView)
-        
-        [self.imageView, self.fullNameLabel, self.setStatusButton, self.statusLabel, self.statusTextField].forEach{
-            mainView.addSubview($0)
-        }
+
+            [self.fullNameLabel, self.setStatusButton, self.statusLabel, self.statusTextField, self.blackView, self.imageView].forEach{
+                mainView.addSubview($0)
+            }
         
         NSLayoutConstraint.activate([
             
@@ -130,7 +224,7 @@ class ProfileHeaderView: UIView {
             mainView.trailingAnchor.constraint(equalTo: trailingAnchor),
             mainView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             
-            // Constraint - imageView
+            //Constraint - imageView
             imageView.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 16),
             imageView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 16),
             imageView.widthAnchor.constraint(equalToConstant: 100),
@@ -155,11 +249,29 @@ class ProfileHeaderView: UIView {
             statusTextField.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -16),
             statusTextField.heightAnchor.constraint(equalToConstant: 25),
             statusTextField.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
+            
+            // Constraint - blackView
+            blackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            blackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            blackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            blackView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height),
+            
         ])
+        
+        
+        // Отдельно ставим кнопку закрытия фрейма (так как все другие кнопки при открытии аватара будут неактивные)
+        addSubview(closeImageButton)
+        
+        NSLayoutConstraint.activate([
+            closeImageButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
+            closeImageButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+        ])
+        
+        setupGesture()
+
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
 }

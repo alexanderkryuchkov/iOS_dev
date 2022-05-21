@@ -7,8 +7,12 @@
 
 import UIKit
 
+protocol ProfileViewDelegate: AnyObject {
+    func tappAction(width: CGFloat, height: CGFloat)
+}
+
 class ProfileViewController: UIViewController {
-    
+        
     private let postModel = PostModel.makepostModel()
     private let photoModel = PhotoModel.makePhotoModel()
     
@@ -30,7 +34,7 @@ class ProfileViewController: UIViewController {
         layer()
     }
     
-    func layer() {
+    private func layer() {
         view.addSubview(profileTableVIew)
         
         NSLayoutConstraint.activate([
@@ -40,6 +44,7 @@ class ProfileViewController: UIViewController {
             profileTableVIew.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+
 }
 
 // MARK: - UITableViewDataSource
@@ -82,6 +87,7 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             let header = ProfileHeaderView()
+            header.delegate = self
             return header
         }else {
             return nil
@@ -101,10 +107,23 @@ extension ProfileViewController: UITableViewDelegate {
     }
 }
 
+
 extension ProfileViewController: PhotosTableDelegate {
         
     func buttonPressed() {
         self.navigationController?.pushViewController(PhotosViewController(), animated: true)
     }
+    
+}
 
+// MARK: - ProfileHeaderDelegate (отключает/включает скролл при раскрытии/закрытии аватарки)
+
+extension ProfileViewController: ProfileHeaderDelegate {
+    func tableScrollDisable() {
+        profileTableVIew.isScrollEnabled = false
+    }
+    
+    func tableScrollEnable() {
+        profileTableVIew.isScrollEnabled = true
+    }
 }
