@@ -63,6 +63,7 @@ class PhotosTableViewCell: UITableViewCell {
                 imageView.contentMode = .scaleAspectFill
                 imageView.clipsToBounds = true
                 imageView.layer.cornerRadius = 6
+
                 imageView.translatesAutoresizingMaskIntoConstraints = false
                 return imageView
             }()
@@ -74,6 +75,7 @@ class PhotosTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layout()
+        setupGesture()
     }
     
     required init?(coder: NSCoder) {
@@ -86,6 +88,15 @@ class PhotosTableViewCell: UITableViewCell {
     
     private func createImageView(count: Int) {
         
+    }
+    
+    func setupGesture() {
+        
+        for item in photoImageView {
+            let tappGesture = UITapGestureRecognizer(target: self, action: #selector(buttonPressed))
+            item.addGestureRecognizer(tappGesture)
+            item.isUserInteractionEnabled = true
+        }
     }
     
     func setupCell(_ photo: [PhotoModel]) {

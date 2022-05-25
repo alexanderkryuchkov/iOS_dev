@@ -7,7 +7,18 @@
 
 import UIKit
 
+
+protocol PostTableViewCellDelegate: AnyObject {
+        
+}
+
+    
 class PostTableViewCell: UITableViewCell {
+    
+    weak var delegate: PostTableViewCellDelegate?
+
+    private var likes: Int = 0
+    private var views: Int = 0
 
     private let mainView: UIView = {
         let view = UIView()
@@ -66,6 +77,7 @@ class PostTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layout()
+        setupGesture()
     }
     
     required init?(coder: NSCoder) {
@@ -76,8 +88,30 @@ class PostTableViewCell: UITableViewCell {
         autorLabel.text = post.author
         postImageView.image = UIImage(named: post.image)
         descriptionLabel.text = post.description
-        likesLabel.text = "Likes: " + String(post.likes)
-        viewsLabel.text = "Views: " + String(post.views)
+        likes = post.likes
+        likesLabel.text = "Likes: " + String(likes)
+        views = post.views
+        viewsLabel.text = "Views: " + String(views)
+    }
+    
+    func setupGesture() {
+        let likesTapGesture = UITapGestureRecognizer(target: self, action: #selector(likesTapAction))
+        likesLabel.addGestureRecognizer(likesTapGesture)
+        likesLabel.isUserInteractionEnabled = true
+        
+        let viewsTapGesture = UITapGestureRecognizer(target: self, action: #selector(viewsTapAction))
+        postImageView.addGestureRecognizer(viewsTapGesture)
+        postImageView.isUserInteractionEnabled = true
+    }
+
+    @objc func likesTapAction() {
+        likes += 1
+        likesLabel.text = "Likes: " + String(likes)
+    }
+    
+    @objc func viewsTapAction() {
+        views += 1
+        viewsLabel.text = "Views: " + String(views)
     }
     
     func layout() {

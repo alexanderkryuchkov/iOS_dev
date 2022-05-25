@@ -13,7 +13,7 @@ protocol ProfileViewDelegate: AnyObject {
 
 class ProfileViewController: UIViewController {
         
-    private let postModel = PostModel.makepostModel()
+    private var postModel = PostModel.makepostModel()
     private let photoModel = PhotoModel.makePhotoModel()
     
     private lazy var profileTableVIew: UITableView = {
@@ -69,6 +69,7 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
+            cell.delegate = self
             cell.setupCell(postModel[indexPath.row])
             return cell
         }
@@ -108,6 +109,7 @@ extension ProfileViewController: UITableViewDelegate {
 }
 
 
+// MARK: - PhotosTableDelegate
 extension ProfileViewController: PhotosTableDelegate {
         
     func buttonPressed() {
@@ -116,8 +118,8 @@ extension ProfileViewController: PhotosTableDelegate {
     
 }
 
-// MARK: - ProfileHeaderDelegate (отключает/включает скролл при раскрытии/закрытии аватарки)
 
+// MARK: - ProfileHeaderDelegate (отключает/включает скролл при раскрытии/закрытии аватарки)
 extension ProfileViewController: ProfileHeaderDelegate {
     func tableScrollDisable() {
         profileTableVIew.isScrollEnabled = false
@@ -126,4 +128,11 @@ extension ProfileViewController: ProfileHeaderDelegate {
     func tableScrollEnable() {
         profileTableVIew.isScrollEnabled = true
     }
+}
+
+
+// MARK: - ProfileHeaderDelegate
+extension ProfileViewController: PostTableViewCellDelegate {
+    
+
 }
