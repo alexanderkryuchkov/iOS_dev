@@ -133,6 +133,14 @@ extension ProfileViewController: ProfileHeaderDelegate {
 
 // MARK: - ProfileHeaderDelegate
 extension ProfileViewController: PostTableViewCellDelegate {
-    
+    func currentPost(autor: String, description: String, postImage: UIImage, likes: Int, views: Int) {
+        let vc = CurrentPostViewController()
+        vc.autorLabel.text = autor
+        vc.descriptionLabel.text = description
+        vc.postImageView.image = postImage
+        vc.likesLabel.text = "Likes: " + String(likes)
+        vc.viewsLabel.text = "Views: " + String(views)
+        present(vc, animated: true)
+    }
 
 }

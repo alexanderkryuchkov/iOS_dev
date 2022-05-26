@@ -109,6 +109,9 @@ extension PhotosViewController: PhotosCollectionViewCellDelegate {
     
     func collectionScrollDisable() {
         photoCollection.isScrollEnabled = false
+        
+//        self.view.bringSubviewToFront(photoCollection.photoImage)
+
     }
     
     func collectionScrollEnable() {

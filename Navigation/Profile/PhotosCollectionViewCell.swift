@@ -21,7 +21,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     private var oldXImageView = CGFloat()
     private var oldYImageView = CGFloat()
         
-    private let photoImage: UIImageView = {
+    let photoImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -59,17 +59,13 @@ class PhotosCollectionViewCell: UICollectionViewCell {
             
             self.photoImage.layer.position = CGPoint(x: self.contentView.center.x, y: UIScreen.main.bounds.height / 2)
             self.photoImage.layer.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width)
+            
 
-
-//            self.blackView.isHidden = false
-//            self.blackView.alpha = 0.5
-//            self.closeImageButton.isHidden = false
             
             self.contentView.isUserInteractionEnabled = false
             self.contentView.layoutIfNeeded()
         } completion: { _ in
             UIView.animate(withDuration: 0.3) {
-//            self.closeImageButton.alpha = 1
             }
         }
         
