@@ -67,11 +67,11 @@
 				600D5F012828D92E0042FB82 /* PostModel.swift */,
 				605C333A282F61160024C1E3 /* PhotoModel.swift */,
 				60100B162821469300FAD718 /* ProfileHeaderView.swift */,
-				60100B18282146AC00FAD718 /* ProfileViewController.swift */,
-				600D5F032829155A0042FB82 /* PostTableViewCell.swift */,
 				600622722829E6F7006D4120 /* PhotosTableViewCell.swift */,
-				600622742829EDC0006D4120 /* PhotosViewController.swift */,
+				600D5F032829155A0042FB82 /* PostTableViewCell.swift */,
+				60100B18282146AC00FAD718 /* ProfileViewController.swift */,
 				600622762829EDDB006D4120 /* PhotosCollectionViewCell.swift */,
+				600622742829EDC0006D4120 /* PhotosViewController.swift */,
 				60329F7C28269FA8001C7783 /* LogInViewController.swift */,
 			);
 			path = Profile;

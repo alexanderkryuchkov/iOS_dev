@@ -72,6 +72,7 @@ extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as! PhotosCollectionViewCell
+        cell.delegate = self
         cell.setupCell(photoModel[indexPath.row])
 
         return cell
@@ -99,5 +100,18 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         sideInset
+    }
+}
+
+
+// MARK: - ProfileHeaderDelegate (отключает/включает скролл при раскрытии/закрытии аватарки)
+extension PhotosViewController: PhotosCollectionViewCellDelegate {
+    
+    func collectionScrollDisable() {
+        photoCollection.isScrollEnabled = false
+    }
+    
+    func collectionScrollEnable() {
+        photoCollection.isScrollEnabled = true
     }
 }
