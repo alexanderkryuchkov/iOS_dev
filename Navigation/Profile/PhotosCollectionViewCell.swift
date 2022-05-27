@@ -11,7 +11,6 @@ protocol PhotosCollectionViewCellDelegate: AnyObject {
     
     func collectionScrollDisable(image: UIImageView)
     
-    func collectionScrollEnable(image: UIImageView)
 }
 
 class PhotosCollectionViewCell: UICollectionViewCell {
@@ -63,60 +62,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
 
         
     @objc func tappAction() {
-        
-        if !isTap {
-            
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn) {
-                
-                self.photoImage.removeFromSuperview()
-                
-                NSLayoutConstraint.deactivate([
-                    self.photoImage.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-                    self.photoImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-                    self.photoImage.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-                    self.photoImage.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
-                ])
-                
-                self.delegate?.collectionScrollDisable(image: self.photoImage)
-
-
-    //            self.contentView.addSubview(self.photoImage)
-    //                self.contentView.bringSubviewToFront(self.photoImage)
-    //                self.photoImage.layer.zPosition = 1
-    //
-    //            NSLayoutConstraint.activate([
-    //                self.photoImage.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-    //                self.photoImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-    //                self.photoImage.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-    //                self.photoImage.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
-    //            ])
-                
-//                self.oldXImageView = self.photoImage.layer.position.x
-//                self.oldYImageView = self.photoImage.layer.position.y
-//                
-//                self.photoImage.layer.position = CGPoint(x: 0, y: 0)
-//
-//                self.photoImage.layer.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width)
-//                self.photoImage.contentMode = .scaleAspectFit
-//                self.photoImage.clipsToBounds = true
-//                            
-//                self.contentView.isUserInteractionEnabled = false
-//                self.contentView.layoutIfNeeded()
-            } completion: { _ in
-                UIView.animate(withDuration: 0.3) {
-                }
-            }
-            
-            isTap = true
-            
-        }else {
-            
-            self.delegate?.collectionScrollEnable(image: self.photoImage)
-
-            
-            isTap = false
-        }
-
+        self.delegate?.collectionScrollDisable(image: self.photoImage)
     }
     
     private func customizeCell() {

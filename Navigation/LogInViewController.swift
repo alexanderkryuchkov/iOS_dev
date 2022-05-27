@@ -133,9 +133,6 @@ class LogInViewController: UIViewController {
                 }
             }
         }
-
-        let vc = ProfileViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
         
     }
     
