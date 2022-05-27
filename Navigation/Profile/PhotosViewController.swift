@@ -107,14 +107,42 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - ProfileHeaderDelegate (отключает/включает скролл при раскрытии/закрытии аватарки)
 extension PhotosViewController: PhotosCollectionViewCellDelegate {
     
-    func collectionScrollDisable() {
+    func collectionScrollDisable(image: UIImageView) {
+        
         photoCollection.isScrollEnabled = false
         
-//        self.view.bringSubviewToFront(photoCollection.photoImage)
+        var oldXImageView = CGFloat()
+        var oldYImageView = CGFloat()
+        
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        oldXImageView = image.layer.position.x
+        oldYImageView = image.layer.position.y
+        
+        self.photoCollection.addSubview(image)
+        
+        NSLayoutConstraint.activate([
+            image.topAnchor.constraint(equalTo: photoCollection.topAnchor),
+            image.leadingAnchor.constraint(equalTo: photoCollection.leadingAnchor),
+            image.trailingAnchor.constraint(equalTo: photoCollection.trailingAnchor),
+            image.bottomAnchor.constraint(equalTo: photoCollection.bottomAnchor)
+        ])
+        
+        image.layer.position = CGPoint(x: oldXImageView, y: oldYImageView)
 
+        image.layer.bounds = CGRect(x: 0, y: 0, width: 300, height: 300)
+
+
+//        self.photoCollection.bringSubviewToFront(image)
+//        image.layer.zPosition = 1
+        
+        print("nnn")
     }
     
-    func collectionScrollEnable() {
+    func collectionScrollEnable(image: UIImageView) {
+        
         photoCollection.isScrollEnabled = true
+        
+        image.removeFromSuperview()
     }
 }

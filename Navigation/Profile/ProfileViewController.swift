@@ -34,6 +34,10 @@ class ProfileViewController: UIViewController {
         layer()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     private func layer() {
         view.addSubview(profileTableVIew)
         
@@ -70,7 +74,7 @@ extension ProfileViewController: UITableViewDataSource {
         }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
             cell.delegate = self
-            cell.setupCell(postModel[indexPath.row])
+            cell.setupCell(postModel[indexPath.row], index: indexPath.row)
             return cell
         }
     }
@@ -133,6 +137,12 @@ extension ProfileViewController: ProfileHeaderDelegate {
 
 // MARK: - ProfileHeaderDelegate
 extension ProfileViewController: PostTableViewCellDelegate {
+    
+    func delPost(index: Int) {
+        postModel.remove(at: index)
+        profileTableVIew.reloadData()
+    }
+    
     func currentPost(autor: String, description: String, postImage: UIImage, likes: Int, views: Int) {
         let vc = CurrentPostViewController()
         vc.autorLabel.text = autor

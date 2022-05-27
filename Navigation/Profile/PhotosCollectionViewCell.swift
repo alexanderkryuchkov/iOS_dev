@@ -9,9 +9,9 @@ import UIKit
 
 protocol PhotosCollectionViewCellDelegate: AnyObject {
     
-    func collectionScrollDisable()
+    func collectionScrollDisable(image: UIImageView)
     
-    func collectionScrollEnable()
+    func collectionScrollEnable(image: UIImageView)
 }
 
 class PhotosCollectionViewCell: UICollectionViewCell {
@@ -20,7 +20,17 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     
     private var oldXImageView = CGFloat()
     private var oldYImageView = CGFloat()
+    private var isTap = false
         
+    
+    let mainView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray6
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    
     let photoImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -31,6 +41,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         customizeCell()
         setupGesture()
     }
@@ -49,38 +60,75 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         photoImage.addGestureRecognizer(tappGesture)
         photoImage.isUserInteractionEnabled = true
     }
-    
+
+        
     @objc func tappAction() {
         
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn) {
+        if !isTap {
             
-            self.oldXImageView = self.photoImage.layer.position.x
-            self.oldYImageView = self.photoImage.layer.position.y
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn) {
+                
+                self.photoImage.removeFromSuperview()
+                
+                NSLayoutConstraint.deactivate([
+                    self.photoImage.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+                    self.photoImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+                    self.photoImage.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+                    self.photoImage.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+                ])
+                
+                self.delegate?.collectionScrollDisable(image: self.photoImage)
+
+
+    //            self.contentView.addSubview(self.photoImage)
+    //                self.contentView.bringSubviewToFront(self.photoImage)
+    //                self.photoImage.layer.zPosition = 1
+    //
+    //            NSLayoutConstraint.activate([
+    //                self.photoImage.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+    //                self.photoImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+    //                self.photoImage.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+    //                self.photoImage.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+    //            ])
+                
+//                self.oldXImageView = self.photoImage.layer.position.x
+//                self.oldYImageView = self.photoImage.layer.position.y
+//                
+//                self.photoImage.layer.position = CGPoint(x: 0, y: 0)
+//
+//                self.photoImage.layer.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width)
+//                self.photoImage.contentMode = .scaleAspectFit
+//                self.photoImage.clipsToBounds = true
+//                            
+//                self.contentView.isUserInteractionEnabled = false
+//                self.contentView.layoutIfNeeded()
+            } completion: { _ in
+                UIView.animate(withDuration: 0.3) {
+                }
+            }
             
-            self.photoImage.layer.position = CGPoint(x: self.contentView.center.x, y: UIScreen.main.bounds.height / 2)
-            self.photoImage.layer.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width)
+            isTap = true
             
+        }else {
+            
+            self.delegate?.collectionScrollEnable(image: self.photoImage)
 
             
-            self.contentView.isUserInteractionEnabled = false
-            self.contentView.layoutIfNeeded()
-        } completion: { _ in
-            UIView.animate(withDuration: 0.3) {
-            }
+            isTap = false
         }
-        
-        delegate?.collectionScrollDisable()
 
     }
     
     private func customizeCell() {
-        contentView.addSubview(photoImage)
         
+        contentView.addSubview(photoImage)
         NSLayoutConstraint.activate([
             photoImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             photoImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             photoImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             photoImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+        
     }
+    
 }

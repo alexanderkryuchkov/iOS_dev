@@ -115,24 +115,24 @@ class LogInViewController: UIViewController {
 
     @objc func buttonPressed() {
         
-//        if let userLoginText = userLogin.text {
-//            if let userPasswordText = userPassword.text {
-//
-//                if validationEmail(email: userLoginText) && validationPassword(password: userPasswordText){
-//
-//                    if userLoginText == rootLogin && userPasswordText == rootPassword {
-//                        let vc = ProfileViewController()
-//                        self.navigationController?.pushViewController(vc, animated: true)
-//                    }else {
-//                        alerts(text: "Неправильный логин или пароль!")
-//                        userLogin.layer.borderColor = UIColor.red.cgColor
-//                        userPassword.layer.borderColor = UIColor.red.cgColor
-//                        userPassword.text = ""
-//                    }
-//
-//                }
-//            }
-//        }
+        if let userLoginText = userLogin.text {
+            if let userPasswordText = userPassword.text {
+
+                if validationEmail(email: userLoginText) && validationPassword(password: userPasswordText){
+
+                    if userLoginText == rootLogin && userPasswordText == rootPassword {
+                        let vc = ProfileViewController()
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }else {
+                        alerts(text: "Неправильный логин или пароль!")
+                        userLogin.layer.borderColor = UIColor.red.cgColor
+                        userPassword.layer.borderColor = UIColor.red.cgColor
+                        userPassword.text = ""
+                    }
+
+                }
+            }
+        }
 
         let vc = ProfileViewController()
         self.navigationController?.pushViewController(vc, animated: true)
@@ -156,24 +156,39 @@ class LogInViewController: UIViewController {
         if email.count == 0 {
             alerts(text: "Поле логина не может быть пустым!")
             
+            loginView.bringSubviewToFront(userLogin)
             userLogin.layer.borderColor = UIColor.red.cgColor
             return false
         }else {
             
-            userLogin.layer.borderColor = UIColor.lightGray.cgColor
-            return true
+            let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+            let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+            let isValid = emailPred.evaluate(with: email)
+            
+            if isValid {
+                userLogin.layer.borderColor = UIColor.lightGray.cgColor
+                return true
+            }else {
+                alerts(text: "Не корректно введен адрес электронной почты")
+                loginView.bringSubviewToFront(userLogin)
+                userLogin.layer.borderColor = UIColor.red.cgColor
+                return false
+            }
+
         }
     }
     
-    // Метод проверки правильного email
+    // Метод проверки правильного пароля
     private func validationPassword(password: String) -> Bool{
         
         if password.count == 0 {
             alerts(text: "Поле пароля не может быть пустым!")
+            loginView.bringSubviewToFront(userPassword)
             userPassword.layer.borderColor = UIColor.red.cgColor
             return false
         }else if password.count < minLenghtPassword {
             alerts(text: "Длина пароля должны быть не менее 5 символов!")
+            loginView.bringSubviewToFront(userPassword)
             userPassword.layer.borderColor = UIColor.red.cgColor
             return false
         }else {

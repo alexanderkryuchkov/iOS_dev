@@ -10,6 +10,8 @@ import UIKit
 
 protocol PostTableViewCellDelegate: AnyObject {
     func currentPost(autor: String, description: String, postImage: UIImage, likes: Int, views: Int)
+    
+    func delPost(index: Int)
 }
 
     
@@ -19,6 +21,7 @@ class PostTableViewCell: UITableViewCell {
 
     private var likes: Int = 0
     private var views: Int = 0
+    private var delIndex: Int = 0
 
     private let mainView: UIView = {
         let view = UIView()
@@ -84,7 +87,10 @@ class PostTableViewCell: UITableViewCell {
         super.init(coder: coder)
     }
     
-    func setupCell(_ post: PostModel) {
+    func setupCell(_ post: PostModel, index: Int) {
+       
+        delIndex = index
+        
         autorLabel.text = post.author
         postImageView.image = UIImage(named: post.image)
         descriptionLabel.text = post.description
@@ -102,6 +108,10 @@ class PostTableViewCell: UITableViewCell {
         let viewsTapGesture = UITapGestureRecognizer(target: self, action: #selector(viewsTapAction))
         postImageView.addGestureRecognizer(viewsTapGesture)
         postImageView.isUserInteractionEnabled = true
+        
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction))
+        swipeGesture.direction = .left
+        mainView.addGestureRecognizer(swipeGesture)
     }
 
     @objc func likesTapAction() {
@@ -114,6 +124,10 @@ class PostTableViewCell: UITableViewCell {
         viewsLabel.text = "Views: " + String(views)
         
         delegate?.currentPost(autor: autorLabel.text!, description: descriptionLabel.text!, postImage: postImageView.image!, likes: likes, views: views)        
+    }
+    
+    @objc func swipeAction() {
+        delegate?.delPost(index: delIndex)
     }
     
     func layout() {
