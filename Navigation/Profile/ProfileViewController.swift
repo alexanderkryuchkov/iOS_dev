@@ -13,7 +13,7 @@ protocol ProfileViewDelegate: AnyObject {
 
 class ProfileViewController: UIViewController {
         
-    private let postModel = PostModel.makepostModel()
+    private var postModel = PostModel.makepostModel()
     private let photoModel = PhotoModel.makePhotoModel()
     
     private lazy var profileTableVIew: UITableView = {
@@ -32,6 +32,10 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemGray4
         layer()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     private func layer() {
@@ -69,7 +73,8 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
-            cell.setupCell(postModel[indexPath.row])
+            cell.delegate = self
+            cell.setupCell(postModel[indexPath.row], index: indexPath.row)
             return cell
         }
     }
@@ -108,6 +113,7 @@ extension ProfileViewController: UITableViewDelegate {
 }
 
 
+// MARK: - PhotosTableDelegate
 extension ProfileViewController: PhotosTableDelegate {
         
     func buttonPressed() {
@@ -116,8 +122,8 @@ extension ProfileViewController: PhotosTableDelegate {
     
 }
 
-// MARK: - ProfileHeaderDelegate (отключает/включает скролл при раскрытии/закрытии аватарки)
 
+// MARK: - ProfileHeaderDelegate (отключает/включает скролл при раскрытии/закрытии аватарки)
 extension ProfileViewController: ProfileHeaderDelegate {
     func tableScrollDisable() {
         profileTableVIew.isScrollEnabled = false
@@ -126,4 +132,25 @@ extension ProfileViewController: ProfileHeaderDelegate {
     func tableScrollEnable() {
         profileTableVIew.isScrollEnabled = true
     }
+}
+
+
+// MARK: - ProfileHeaderDelegate
+extension ProfileViewController: PostTableViewCellDelegate {
+    
+    func delPost(index: Int) {
+        postModel.remove(at: index)
+        profileTableVIew.reloadData()
+    }
+    
+    func currentPost(autor: String, description: String, postImage: UIImage, likes: Int, views: Int) {
+        let vc = CurrentPostViewController()
+        vc.autorLabel.text = autor
+        vc.descriptionLabel.text = description
+        vc.postImageView.image = postImage
+        vc.likesLabel.text = "Likes: " + String(likes)
+        vc.viewsLabel.text = "Views: " + String(views)
+        present(vc, animated: true)
+    }
+
 }

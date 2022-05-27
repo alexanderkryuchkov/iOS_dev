@@ -1,36 +1,22 @@
 //
-//  PostTableViewCell.swift
+//  CurrentPostViewController.swift
 //  Navigation
 //
-//  Created by Alexander Kryuchkov on 09.05.2022.
+//  Created by Alexander Kryuchkov on 27.05.2022.
 //
 
 import UIKit
 
+class CurrentPostViewController: UIViewController {
 
-protocol PostTableViewCellDelegate: AnyObject {
-    func currentPost(autor: String, description: String, postImage: UIImage, likes: Int, views: Int)
-    
-    func delPost(index: Int)
-}
-
-    
-class PostTableViewCell: UITableViewCell {
-    
-    weak var delegate: PostTableViewCellDelegate?
-
-    private var likes: Int = 0
-    private var views: Int = 0
-    private var delIndex: Int = 0
-
-    private let mainView: UIView = {
+    let mainView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view
     }()
     
-    private let autorLabel: UILabel = {
+    let autorLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
@@ -40,7 +26,7 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let postImageView: UIImageView = {
+    let postImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .black
@@ -49,7 +35,7 @@ class PostTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    private let descriptionLabel: UILabel = {
+    let descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemGray
@@ -59,7 +45,7 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let likesLabel: UILabel = {
+    let likesLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
@@ -68,7 +54,7 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let viewsLabel: UILabel = {
+    let viewsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
@@ -76,65 +62,18 @@ class PostTableViewCell: UITableViewCell {
         label.text = "viewsLabel"
         return label
     }()
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        layout()
-        setupGesture()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    func setupCell(_ post: PostModel, index: Int) {
-       
-        delIndex = index
-        
-        autorLabel.text = post.author
-        postImageView.image = UIImage(named: post.image)
-        descriptionLabel.text = post.description
-        likes = post.likes
-        likesLabel.text = "Likes: " + String(likes)
-        views = post.views
-        viewsLabel.text = "Views: " + String(views)
-    }
-    
-    func setupGesture() {
-        let likesTapGesture = UITapGestureRecognizer(target: self, action: #selector(likesTapAction))
-        likesLabel.addGestureRecognizer(likesTapGesture)
-        likesLabel.isUserInteractionEnabled = true
-        
-        let viewsTapGesture = UITapGestureRecognizer(target: self, action: #selector(viewsTapAction))
-        postImageView.addGestureRecognizer(viewsTapGesture)
-        postImageView.isUserInteractionEnabled = true
-        
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction))
-        swipeGesture.direction = .left
-        mainView.addGestureRecognizer(swipeGesture)
-    }
 
-    @objc func likesTapAction() {
-        likes += 1
-        likesLabel.text = "Likes: " + String(likes)
-    }
-    
-    @objc func viewsTapAction() {
-        views += 1
-        viewsLabel.text = "Views: " + String(views)
-        
-        delegate?.currentPost(autor: autorLabel.text!, description: descriptionLabel.text!, postImage: postImageView.image!, likes: likes, views: views)        
-    }
-    
-    @objc func swipeAction() {
-        delegate?.delPost(index: delIndex)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemGray4
+        layout()
     }
     
     func layout() {
         
         let insert: CGFloat = 8
         
-        contentView.addSubview(mainView)
+        view.addSubview(mainView)
         mainView.addSubview(autorLabel)
         mainView.addSubview(postImageView)
         mainView.addSubview(descriptionLabel)
@@ -143,10 +82,10 @@ class PostTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             // Constraint - mainView
-            mainView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            mainView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            mainView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            mainView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            mainView.topAnchor.constraint(equalTo: view.topAnchor),
+            mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             // Constraint - autorLabel
             autorLabel.topAnchor.constraint(equalTo: mainView.topAnchor, constant: insert),
@@ -157,7 +96,7 @@ class PostTableViewCell: UITableViewCell {
             postImageView.topAnchor.constraint(equalTo: autorLabel.bottomAnchor, constant: 12),
             postImageView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
-            postImageView.heightAnchor.constraint(equalToConstant: 200),
+            postImageView.heightAnchor.constraint(equalToConstant: 400),
             
             // Constraint - descriptionLabel
             descriptionLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: insert),
@@ -171,7 +110,8 @@ class PostTableViewCell: UITableViewCell {
             // Constraint - viewsLabel
             viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: insert),
             viewsLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -insert),
-            viewsLabel.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: -insert)
         ])
     }
+
+
 }

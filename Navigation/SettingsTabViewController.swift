@@ -29,7 +29,8 @@ class SettingsTabViewController: UITabBarController {
         userProfileVC.tabBarItem.image = UIImage(systemName: "person.crop.circle")
         userProfileVC.navigationItem.title = "Профиль пользователя"
         
-        viewControllers = [userFeedNavigationController, userProfileNavigationController]
+        viewControllers = [userProfileNavigationController, userFeedNavigationController]
+
     }
     
 }

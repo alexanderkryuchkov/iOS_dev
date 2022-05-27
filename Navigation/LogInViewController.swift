@@ -10,6 +10,11 @@ import UIKit
 class LogInViewController: UIViewController {
     
     private let nc = NotificationCenter.default
+    
+    private var rootLogin = "admin@admin.ru"
+    private var rootPassword = "q12345"
+    // Минимальная длина пароля
+    private let minLenghtPassword = 5
 
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -109,8 +114,26 @@ class LogInViewController: UIViewController {
     }
 
     @objc func buttonPressed() {
-        let vc = ProfileViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        if let userLoginText = userLogin.text {
+            if let userPasswordText = userPassword.text {
+
+                if validationEmail(email: userLoginText) && validationPassword(password: userPasswordText){
+
+                    if userLoginText == rootLogin && userPasswordText == rootPassword {
+                        let vc = ProfileViewController()
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }else {
+                        alerts(text: "Неправильный логин или пароль!")
+                        userLogin.layer.borderColor = UIColor.red.cgColor
+                        userPassword.layer.borderColor = UIColor.red.cgColor
+                        userPassword.text = ""
+                    }
+
+                }
+            }
+        }
+        
     }
     
     @objc private func kbdShow(notification: NSNotification) {
@@ -123,6 +146,61 @@ class LogInViewController: UIViewController {
     @objc private func kbdHide() {
         scrollView.contentInset = .zero
         scrollView.verticalScrollIndicatorInsets = .zero
+    }
+    
+    // Метод проверки правильного email
+    private func validationEmail(email: String) -> Bool {
+        if email.count == 0 {
+            alerts(text: "Поле логина не может быть пустым!")
+            
+            loginView.bringSubviewToFront(userLogin)
+            userLogin.layer.borderColor = UIColor.red.cgColor
+            return false
+        }else {
+            
+            let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+            let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+            let isValid = emailPred.evaluate(with: email)
+            
+            if isValid {
+                userLogin.layer.borderColor = UIColor.lightGray.cgColor
+                return true
+            }else {
+                alerts(text: "Не корректно введен адрес электронной почты")
+                loginView.bringSubviewToFront(userLogin)
+                userLogin.layer.borderColor = UIColor.red.cgColor
+                return false
+            }
+
+        }
+    }
+    
+    // Метод проверки правильного пароля
+    private func validationPassword(password: String) -> Bool{
+        
+        if password.count == 0 {
+            alerts(text: "Поле пароля не может быть пустым!")
+            loginView.bringSubviewToFront(userPassword)
+            userPassword.layer.borderColor = UIColor.red.cgColor
+            return false
+        }else if password.count < minLenghtPassword {
+            alerts(text: "Длина пароля должны быть не менее 5 символов!")
+            loginView.bringSubviewToFront(userPassword)
+            userPassword.layer.borderColor = UIColor.red.cgColor
+            return false
+        }else {
+            userPassword.layer.borderColor = UIColor.lightGray.cgColor
+            return true
+        }
+    }
+
+    // Метод вызова уведомлений
+    private func alerts(text: String) {
+        
+        let alertController = UIAlertController(title: "Внимание!!!", message: text, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ок", style: .default, handler: nil)
+        alertController.addAction(alertAction)
+        present(alertController, animated: true, completion: nil)
     }
 
     func layer() {
