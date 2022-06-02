@@ -125,6 +125,14 @@ extension ProfileViewController: PhotosTableDelegate {
 
 // MARK: - ProfileHeaderDelegate (отключает/включает скролл при раскрытии/закрытии аватарки)
 extension ProfileViewController: ProfileHeaderDelegate {
+    
+    func alertEmptyStatusText(text: String) {
+        let alertController = UIAlertController(title: "Внимание!!!", message: text, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ок", style: .default, handler: nil)
+        alertController.addAction(alertAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     func tableScrollDisable() {
         profileTableVIew.isScrollEnabled = false
     }

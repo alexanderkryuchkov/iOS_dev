@@ -13,6 +13,8 @@ protocol ProfileHeaderDelegate: AnyObject {
     func tableScrollDisable()
     
     func tableScrollEnable()
+    
+    func alertEmptyStatusText(text: String)
 }
 
 class ProfileHeaderView: UIView {
@@ -132,12 +134,14 @@ class ProfileHeaderView: UIView {
     }()
     
     @objc func buttonPressed() {
-        UIView.animate(withDuration: 1.5) {
             if !self.statusText.isEmpty {
+                self.statusTextField.layer.borderColor = UIColor.black.cgColor
                 self.statusLabel.text = self.statusText
                 self.statusTextField.text = ""
+            }else {
+                self.statusTextField.layer.borderColor = UIColor.red.cgColor
+                self.delegate?.alertEmptyStatusText(text: "Поле пустое!")
             }
-        }
     }
 
     
@@ -200,6 +204,7 @@ class ProfileHeaderView: UIView {
         
         delegate?.tableScrollEnable()
     }
+    
     
     func setupGesture() {
         let tappGesture = UITapGestureRecognizer(target: self, action: #selector(tappAction))
